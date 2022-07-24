@@ -10,6 +10,12 @@
     <body>
         <div id="hello-world">
             <fieldset>
+                <legend>v-cloak</legend>
+                <p> {{firstName}} </p>
+                <p v-cloak> {{firstName}} </p>
+            </fieldset>
+            
+            <fieldset>
                 <legend>Template</legend>
                 <div v-html="htmlContent"></div>
                 <p>Primeiro Nome: {{firstName}} </p>
@@ -17,24 +23,115 @@
                 <p>Idade: {{age}} anos</p>
                 <p> {{age >= 18 ? 'Maior de Idade' : 'Menor de Idade'}} </p>
             </fieldset>
-
+            
             <fieldset>
                 <legend>Methods</legend>
                 <button v-on:click="incrementAge">+ Idade</button>
                 <button @click="decrementAge">- Idade</button>
             </fieldset>
-
+            
             <fieldset>
                 <legend>Computed Properties</legend>
                 <p>Nome Completo: {{fullName}} - Vinculando uma propriedade</p>
                 <p>Nome Completo: {{getFullName()}} - chamando um método</p>
             </fieldset>
-
+            
             <fieldset>
                 <legend>Watchers</legend>
                 <label for="input-address">Endereço: </label>
                 <input id="input-address" type="text" v-model="address" />
             </fieldset>
+            
+            <fieldset>
+                <legend>v-if</legend>
+                <label for="input-grade">Nota: </label>
+                <input id="input-grade" type="text" v-model="grade" />
+                
+                <p v-if="grade <60">Reprovado</p>
+                <p v-else-if="grade >= 60 && grade <98">Aprovado</p>
+                <p v-else-if="grade >= 98">Aprovado com Excelência</p>
+                <p v-else>Aprovado</p>
+            </fieldset>
+            
+            <fieldset>
+                <legend>v-show</legend>
+                <button v-show="!isUserLogged" @click="isUserLogged = true">Login</button>
+                <button v-show="isUserLogged" @click="isUserLogged = false">Logout</button>
+            </fieldset>
+
+            <fieldset>
+                <legend>v-text</legend>
+                <!-- Se assemelha as chaves duplas -->
+                <!-- <p> {{firstName}} </p> -->
+                <p v-text="firstName"></p>
+            </fieldset>
+
+            <fieldset>
+                <legend>v-html</legend>
+                <p v-html="htmlContent"></p>
+            </fieldset>
+
+            <fieldset>
+                <legend>v-once</legend>
+                <p v-once> {{count}} </p>
+                <p> {{count}} </p>
+                <button @click="count++">Adicionar</button>
+            </fieldset>
+
+            <fieldset>
+                <legend>v-for</legend>
+                <h4>Marcas</h4>
+                <ul>
+                    <li v-for="brand in carBrands">{{brand}}</li>
+                </ul>
+                <h4>Carros</h4>
+                <ul>
+                    <li v-for="car in cars">{{car.name}} ({{car.brand}}) </li>
+                </ul>
+                <h4>Carro</h4>
+                <p v-for="(value, key, index) in car">{{index}} - {{key}} - {{value}}</p>
+            </fieldset>
+            
+            <fieldset>
+                <legend>v-bind</legend>
+                <a v-bind:href="urlIGTI">IGTI</a>
+                <br/>
+                <a :href="urlIGTI" v-bind:[argument]="urlIgtiDescription">IGTI</a>
+            </fieldset>
+            
+            <fieldset>
+                <legend>v-model</legend>
+                <label for="input-firstname">Primeiro nome: </label>
+                <input id="input-firstname" type="text" v-model="firstName" />
+                <br/>
+                <label for="textarea-html">HTML: </label>
+                <textarea id="textarea-html" v-model="htmlContent"></textarea>
+                <br/>
+                <input type="checkbox" id="checkbox" v-model="checked">
+                <label for="checkbox"> {{checked}} </label>
+                <br/>
+                <input type="radio" id="one" value="Um" v-model="selectedOption">
+                <label for="one">Um</label>
+                <br/>
+                <input type="radio" id="two" value="Dois" v-model="selectedOption">
+                <label for="two">Dois</label>
+                <br/>
+                <p>Opção Escolhida: {{selectedOption}} </p>
+                
+                <select v-model="selectedCar">
+                    <option v-for="car in cars" v-bind:value="car">
+                        {{car.name}} - {{car.brand}}
+                    </option>
+                </select>
+                <p>Carro Escolhido: {{selectedCar.name}} - {{selectedCar.brand}} </p>
+            </fieldset>
+            
+            <fieldset>
+                <legend>v-pre</legend>
+                <p> {{firstName}} </p>
+                <p v-pre> {{firstName}} </p>
+            </fieldset>
+            
         </div>
         <script src="https://unpkg.com/vue@3.0.4"></script>
         <script>
@@ -45,8 +142,21 @@
                         firstName: "John",
                         lastName: "Snow",
                         age: 30,
-                        address: ''
-
+                        address: '',
+                        grade: 0,
+                        isUserLogged: false,
+                        count: 1,
+                        carBrands: ["VW", "Fiat", "Renault", "Ford"],
+                        cars: [ { name: "Ka", brand: "Ford" },
+                                { name: "Palio", brand: "Fiat" },
+                                { name: "Sandero", brand: "Renault" } ],
+                        car: { name: "Ka", brand: "Ford", year: 2010, km: 60000 },
+                        urlIGTI: "https://www.igti.com.br",
+                        urlIgtiDescription: "Clique aqui para acessar o site do IGTI",
+                        argument: "title",
+                        checked: false,
+                        selectedOption: '',
+                        selectedCar: {}
                     }
                 },
                 methods: {

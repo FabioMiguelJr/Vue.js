@@ -1,3 +1,7 @@
+[v-cloak] {
+  display: none;
+}
+
 button {
   margin-right: 16px;
 }
@@ -8,12 +12,13 @@ div {
 
 fieldset {
   background-color: rgb(224, 250, 253);
+  font-size: 14px;
 }
 
-legend {
+legend, h4 {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font: bold;
-  font-size: 14px;
+  font-size: 16px;
   color: blue;
 }
 
