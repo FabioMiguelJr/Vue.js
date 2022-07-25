@@ -1,39 +1,40 @@
 <template>
-  <h1 class="label-title">Cálculo do IMC</h1>
-  <h2 class="label-subtitle">
-    Digite o seu peso e altura para calcularmos o IMC
-  </h2>
-  <div class="div-imc">
-    <span class="p-float-label">
-      <InputText
-        id="input-weight"
-        type="text"
-        v-model="weight"
-        :disabled="imc"
-      />
-      <label for="input-weight">Peso</label>
-    </span>
-  </div>
-  <div class="div-imc">
-    <span class="p-float-label">
-      <InputText
-        id="input-height"
-        type="text"
-        v-model="height"
-        :disabled="imc"
-      />
-      <label for="input-height">Altura</label>
-    </span>
+  <h1 class="label-title">Reais para Dólares</h1>
+  <h2 class="label-subtitle">$</h2>
+  <div class="justify">
+    <div class="div-imc">
+      <span class="p-float-label p-inputtext-lg">
+        <InputText
+          id="input-reais"
+          type="text"
+          v-model="real"
+          :disabled="dollars"
+          placeholder="Quantidade em Reais"
+        />
+      </span>
+    </div>
+    <div class="div-imc">
+      <span class="p-float-label p-inputtext-lg">
+        <InputText
+          id="input-dollar"
+          type="text"
+          v-model="dollar"
+          :disabled="dollars"
+          placeholder="Cotação do Dólar"
+        />
+      </span>
+    </div>
+    <div class="div-imc1">
+      <ButtonText class="div-imc-button1" label="Limpar" @click="clear" />
+      <ButtonText class="div-imc-button2" label="Calcular" @click="calculate" />
+    </div>
   </div>
 
-  <div class="div-imc">
-    <ButtonText class="div-imc-button" label="Calcular" @click="calculate" />
-    <ButtonText class="div-imc-button" label="Limpar" @click="clear" />
-  </div>
-
-  <div class="label-result" v-if="imc">
-    <p>Seu IMC é: {{ imc }}</p>
-    <p>Classificação do seu IMC é: {{ classification }}</p>
+  <div class="label-result" v-if="dollars">
+    <p>
+      Com {{ real }} reais é possível comprar {{ dollars }} dólares a
+      {{ dollar }} cada.
+    </p>
   </div>
 </template>
 
@@ -41,36 +42,21 @@
 export default {
   data() {
     return {
-      height: null,
-      weight: null,
-      imc: null,
-      classification: "",
+      real: null,
+      dollar: null,
+      dollars: null,
     };
   },
   methods: {
     calculate: function () {
-      if (this.height && this.weight) {
-        this.imc = (this.weight / (this.height ^ 2)).toFixed(2);
-        console.log(this.weight);
-        console.log(this.height);
-        console.log(this.imc);
-        if (this.imc < 18.5) {
-          this.classification = "Magreza";
-        } else if (this.imc >= 18.5 && this.imc < 25) {
-          this.classification = "Normal";
-        } else if (this.imc >= 25 && this.imc < 30) {
-          this.classification = "Sobrepeso";
-        } else if (this.imc >= 40 && this.imc < 50) {
-          this.classification = "Obesidade";
-        } else {
-          this.classification = "Obesidade Grave";
-        }
+      if (this.real && this.dollar) {
+        this.dollars = (this.real / this.dollar).toFixed(2);
       }
     },
     clear: function () {
-      this.height = null;
-      this.weight = null;
-      this.imc = null;
+      this.real = null;
+      this.dollar = null;
+      this.dollars = null;
       this.classification = "";
     },
   },
@@ -78,29 +64,54 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.justify {
+  text-align: center;
 }
 
 .div-imc {
   margin-top: 2rem;
 }
 
-.div-imc-button {
+.div-imc1 {
+  margin-top: 2rem;
+}
+
+.div-imc-button1,
+.div-imc-button2 {
+  height: auto;
+  width: 6.8rem;
+}
+
+.div-imc-button1 {
   margin-right: 1rem !important;
 }
 
+.div-imc-button2 {
+  margin-left: 1rem !important;
+}
+
 .label-title {
-  font-size: 1.6rem;
+  font-size: 1rem;
+  background-color: lightgray;
+  margin: 0;
+  padding: 1.5rem;
 }
 .label-subtitle {
-  font-size: 1.1rem;
+  font-size: 4rem;
+  text-align: center;
 }
 
 .label-result {
   font-size: 1.5rem;
+  text-align: center;
 }
 </style>
