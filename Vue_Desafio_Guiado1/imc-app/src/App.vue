@@ -1,4 +1,5 @@
 <template>
+  <!-- VArsão que usei para o trabalho prático -->
   <h1 class="label-title">Cálculo do IMC</h1>
   <h2 class="label-subtitle">
     Digite o seu peso e altura para calcularmos o IMC
