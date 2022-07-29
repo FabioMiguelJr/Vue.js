@@ -2,28 +2,12 @@
   display: none;
 }
 
-button {
-  margin-right: 16px;
+.test-class-1 {
+  font-style: italic;
 }
 
-div {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-fieldset {
-  background-color: rgb(224, 250, 253);
-  font-size: 14px;
-}
-
-legend, h4 {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font: bold;
-  font-size: 16px;
+.test-class-2 {
   color: blue;
-}
-
-#input-address {
-  width: 70%;
 }
 
 /*# sourceMappingURL=styles.css.map */

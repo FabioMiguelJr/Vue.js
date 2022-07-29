@@ -132,6 +132,67 @@
                 <p v-pre> {{firstName}} </p>
             </fieldset>
             
+            <fieldset>
+                <legend>Eventos</legend>
+                <div>
+                    <!-- Eventos referentes ao mouse  -->
+                    <button v-on:click="eventTest('click')">On Click</button>
+                    <button v-on:click="eventTest">On Click Event Param Implicit</button>
+                    <button @click="eventTestParam('@click', $event)">On Click Event Param Explicit</button>
+                    <button v-on:dblclick="eventTest('dbl click')">On Double Click</button>
+                    <button @click.left="eventMouseTest">Mouse left</button>
+                    <button @click.right.prevent="eventMouseTest">Mouse Right</button>
+                    <button @click.middle="eventMouseTest">Mouse Middle</button>
+
+                    <p @mouseenter="eventMouseTest" @mouseleave="eventMouseTest">Mouse hover test</p>
+                </div>
+                <div>
+                    <a :href="urlIGTI" v-bind:[argument]="urlIgtiDescription" 
+                       @click.prevent="showAlert('Blocked')">IGTI</a>
+                    <br />
+                    <a :href="urlIGTI" v-bind:[argument]="urlIgtiDescription" 
+                       @click.prevent.once="showAlert('Blocked')">IGTI</a>
+                </div>
+                <!-- Eventos referentes ao teclado  -->
+                <div>
+                    <input @keyup.enter="eventKeyTest" placeholder="Press Enter" />
+                    <input @keyup.delete="eventKeyTest" placeholder="Press Delete" />
+                    <input @keyup.esc="eventKeyTest" placeholder="Press Esc" />
+                    <input @keyup.space="eventKeyTest" placeholder="Press Space" />
+                    <input @keyup.up="eventKeyTest" placeholder="Press Up" />
+                    <input @keyup.down="eventKeyTest" placeholder="Press Down" />
+                    <input @keyup.left="eventKeyTest" placeholder="Press Left" />
+                    <input @keyup.right="eventKeyTest" placeholder="Press Right" />
+                    <input @keydown.tab="eventKeyTest" placeholder="Press Tab" />
+                    <input @keydown.ctrl="eventKeyTest" placeholder="Press Ctrl" />
+                    <input @keydown.alt="eventKeyTest" placeholder="Press Alt" />
+                    <input @keydown.shift="eventKeyTest" placeholder="Press Shift" />
+                    <input @keydown.meta="eventKeyTest" placeholder="Press Meta" />
+                </div>
+
+                <!-- Eventos mesclados mouse + teclado -->
+                <p @click.ctrl="eventTest('ctrl + click')">Ctrl + Click</p>
+                <p @click.ctrl.exact="eventTest('ctrl + click')">Ctrl + Click Exato</p>
+                <p @click.ctrl="eventTest('ctrl + click')" @click.alt="eventTest('Alt + Click')">Ctrl ou Alt+ Click</p>
+            </fieldset>
+
+            <!-- Estilos no Vue.js -->
+            <fieldset>
+                <legend>Estilos</legend>
+                <p v-bind:style="{ color: textColor }" >Inline style object</p>
+                <p :style="textColorObject" >Inline style object bind</p>
+                <p>Executam a mesma coisa</p>
+                
+                <p class="test-class-1" :class="classText2">Class Bind</p>
+                <p :class="classList">Class Bind List</p>
+                <p :class="[classText1, classText2]">Class List Inline</p>
+                <p :class="[1>0 ? classList :classList]">Class Expression</p>
+                <p :class="[1>2 ? classList :[] ]">Class Expression</p>
+                <p :class="1>2 ? 'test-class-1':'test-class-2' " >Class Expression</p>
+                <p :class="3>2 ? 'test-class-1':'test-class-2' ">Class Expression</p>
+                
+            </fieldset>
+            
         </div>
         <script src="https://unpkg.com/vue@3.0.4"></script>
         <script>
@@ -156,7 +217,15 @@
                         argument: "title",
                         checked: false,
                         selectedOption: '',
-                        selectedCar: {}
+                        selectedCar: {},
+                        textColor: 'blue',
+                        textColorObject: {
+                            color: "green",
+                            fontSize: "26px",
+                        },
+                        classText1: "test-class-1",
+                        classText2: "test-class-2",
+                        classList: ["test-class-1", "test-class-2"]
                     }
                 },
                 methods: {
@@ -168,6 +237,22 @@
                     },
                     getFullName() {
                         return `${this.firstName} ${this.lastName}`
+                    },
+                    eventTest(name) {
+                        console.log(name);
+                    },
+                    eventTestParam(name, event) {
+                        console.log(name);
+                        console.log(event);
+                    },
+                    eventMouseTest(event) {
+                        console.log(event.type);
+                    },
+                    showAlert(msg) {
+                        alert(msg);
+                    },
+                    eventKeyTest(event) {
+                        console.log(event.key, event.type);
                     }
                 },
                 computed: {
